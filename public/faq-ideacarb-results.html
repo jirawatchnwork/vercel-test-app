@@ -139,9 +139,32 @@
   .stat.accent .n{ color:var(--accent-ink); }
   .stat.amber .n{ color:var(--amber); }
 
+  .filter-row{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
   .search-wrap{
     position:relative;
     max-width:420px;
+    flex:1;
+  }
+  .fallback-filter{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    cursor:pointer;
+    user-select:none;
+    white-space:nowrap;
+  }
+  .fallback-filter input{
+    accent-color:var(--amber);
+    width:15px;
+    height:15px;
+    cursor:pointer;
   }
   #search{
     width:100%;
@@ -328,9 +351,15 @@
     <h1>ผลทดสอบคำถามที่พบบ่อย (FAQ)</h1>
     <p class="lede">รวบรวมคำถาม 94 ข้อจาก <code>docs/faq_ideacarb.md</code> ที่ทดสอบยิงเข้า <code>/chat</code> endpoint จริง (scope=support) พร้อมคำตอบ แหล่งอ้างอิง และจุดที่ระบบยังไม่มีข้อมูล (fallback)</p>
     <div class="statrow" id="stats"></div>
-    <div class="search-wrap">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
-      <input id="search" type="text" placeholder="ค้นหาคำถาม เช่น Scope 3, Emission Factor, Export…" autocomplete="off">
+    <div class="filter-row">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="search" type="text" placeholder="ค้นหาคำถาม เช่น Scope 3, Emission Factor, Export…" autocomplete="off">
+      </div>
+      <label class="fallback-filter" for="fallback-only">
+        <input id="fallback-only" type="checkbox">
+        แสดงเฉพาะคำถามที่ตอบไม่ได้
+      </label>
     </div>
   </header>
 
@@ -410,7 +439,7 @@ DATA.forEach(section => {
   const list = el('div', {class:'qa-list'});
 
   section.items.forEach((it, idx) => {
-    const details = el('details', {class:'qa', 'data-q': it.q.toLowerCase()});
+    const details = el('details', {class:'qa', 'data-q': it.q.toLowerCase(), 'data-fallback': it.fallback ? '1' : '0'});
     if(idx === 0 && section.num === '1') details.setAttribute('open','');
     const summary = el('summary', null, el('span', {class:'qtxt'}, it.q));
     if(it.fallback) summary.append(el('span', {class:'badge'}, 'ไม่พบข้อมูล'));
@@ -434,18 +463,25 @@ DATA.forEach(section => {
 });
 
 const searchInput = document.getElementById('search');
-searchInput.addEventListener('input', () => {
+const fallbackOnly = document.getElementById('fallback-only');
+
+function applyFilters(){
   const q = searchInput.value.trim().toLowerCase();
+  const onlyFallback = fallbackOnly.checked;
   let anyVisible = false;
   document.querySelectorAll('section.cat').forEach(sec => {
     let sectionHasVisible = false;
     sec.querySelectorAll('details.qa').forEach(d => {
-      const match = !q || d.getAttribute('data-q').includes(q);
+      const match = (!q || d.getAttribute('data-q').includes(q)) &&
+        (!onlyFallback || d.getAttribute('data-fallback') === '1');
       d.hidden = !match;
-      if(match){ sectionHasVisible = true; anyVisible = true; if(q) d.setAttribute('open',''); }
+      if(match){ sectionHasVisible = true; anyVisible = true; if(q || onlyFallback) d.setAttribute('open',''); }
     });
     sec.hidden = !sectionHasVisible;
   });
   searchEmpty.style.display = anyVisible ? 'none' : 'block';
-});
+}
+
+searchInput.addEventListener('input', applyFilters);
+fallbackOnly.addEventListener('change', applyFilters);
 </script>
