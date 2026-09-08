@@ -60,10 +60,6 @@ export default function LoginPage() {
         >
           {pending ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
         </button>
-
-        <p className="text-center text-xs text-zinc-500 dark:text-zinc-500">
-          ทดสอบด้วย admin / password123
-        </p>
       </form>
     </div>
   );
