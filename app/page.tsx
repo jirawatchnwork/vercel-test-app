@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { KbsWidget } from "@jirawatchnwork/kbs-widget-react";
+import { logout } from "@/app/actions/auth";
 
 const features = [
   {
@@ -43,10 +44,19 @@ export default function Home() {
   return (
     <div className="flex flex-col flex-1 items-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex w-full flex-1 flex-col items-center bg-white dark:bg-black">
+        <form action={logout} className="flex w-full max-w-5xl justify-end px-6 pt-6">
+          <button
+            type="submit"
+            className="text-sm font-medium text-zinc-600 underline-offset-4 hover:underline dark:text-zinc-400"
+          >
+            ออกจากระบบ
+          </button>
+        </form>
+
         {/* Hero */}
         <section className="flex w-full max-w-5xl flex-col items-center gap-6 px-6 py-24 text-center sm:py-32">
           <span className="rounded-full bg-black/[.06] px-4 py-1 text-sm font-medium text-zinc-700 dark:bg-white/[.08] dark:text-zinc-300">
-            แพลตฟอร์มคำนวณคาร์บอนฟุตพริ้นท์
+            ทดสอบคำถาม
           </span>
           <h1 className="max-w-2xl text-4xl font-semibold leading-tight tracking-tight text-black dark:text-zinc-50 sm:text-5xl">
             ลดคาร์บอนฟุตพริ้นท์องค์กรของคุณ อย่างเป็นระบบ
