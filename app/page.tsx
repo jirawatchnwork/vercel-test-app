@@ -139,7 +139,7 @@ export default function Home() {
       </main>
       <KbsWidget
         scope="product"
-        apiBase={process.env.NEXT_PUBLIC_KBS_API_BASE ?? "https://api.example.com"}
+        apiBase={process.env.NEXT_PUBLIC_KBS_API_BASE ?? "https://chat.ideacarb.com"}
         suggestions={["วิธีคำนวณคาร์บอนฟุตพริ้นท์", "สมัครแพ็กเกจยังไง"]}
       />
     </div>

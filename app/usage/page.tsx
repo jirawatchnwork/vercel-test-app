@@ -15,7 +15,7 @@ export default function Usage() {
       </main>
       <KbsWidget
         scope="support"
-        apiBase={process.env.NEXT_PUBLIC_KBS_API_BASE ?? "https://api.example.com"}
+        apiBase={process.env.NEXT_PUBLIC_KBS_API_BASE ?? "https://chat.ideacarb.com"}
         authToken={process.env.NEXT_PUBLIC_KBS_WIDGET_TOKEN}
       />
     </div>
