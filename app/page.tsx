@@ -58,7 +58,7 @@ export default function Home() {
           <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
             <a
               className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-6 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] sm:w-auto"
-              href="#pricing"
+              href="/usage"
             >
               เริ่มต้นใช้งานฟรี
             </a>
@@ -66,7 +66,7 @@ export default function Home() {
               className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-6 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] sm:w-auto"
               href="/usage"
             >
-              วิธีใช้งาน
+              เข้าใช้งาน
             </Link>
             <Link
               className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-6 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] sm:w-auto"
